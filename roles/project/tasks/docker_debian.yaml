@@ -1,0 +1,104 @@
+---
+
+- name: Install prerequisites
+  apt:
+    name: ['apt-transport-https','ca-certificates','curl','gnupg2','software-properties-common']
+    update_cache: yes
+
+- name: Add Docker GPG key
+  apt_key: url=https://download.docker.com/linux/ubuntu/gpg
+
+- name: Add Docker APT repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/{{ansible_distribution|lower}} {{ansible_distribution_release}} stable
+
+- name: Install Docker
+  apt:
+    name: docker-ce
+    update_cache: yes
+
+- name: Start Docker service
+  service:
+      name: docker
+      state: started
+      enabled: yes
+
+- name: Add user vagrant to docker group
+  user:
+    name: vagrant
+    groups: docker
+    append: yes
+
+- name: Install Docker Module for Python
+  pip:
+    name: docker
+
+- name: Create a network bridge xwiki-nw
+  docker_network:
+    name: xwiki-nw
+
+- name: Re-create a mysql:5.7 container
+  docker_container:
+    name: mysql-xwiki
+    image: mysql:5.7
+    command: -d mysql:5.7 --character-set-server=utf8 --collation-server=utf8_bin --explicit-defaults-for-timestamp=1
+    state: present
+    recreate: yes
+    env: 
+      MYSQL_ROOT_PASSWORD: "xwiki"
+      MYSQL_USER: "{{ db_user }}"
+      MYSQL_PASSWORD: "{{ db_pass }}"
+      MYSQL_DATABASE: "{{ db_name }}"
+    volumes:
+      - /my/own/mysql:/var/lib/mysql
+
+
+- name: restart mysql:5.7 container
+  docker_container:
+    name: mysql-xwiki
+    image: mysql:5.7
+    state: started
+    restart: yes
+    env:
+      MYSQL_ROOT_PASSWORD: "xwiki"
+      MYSQL_USER: "{{ db_user }}"
+      MYSQL_PASSWORD: "{{ db_pass }}"
+      MYSQL_DATABASE: "{{ db_name }}"
+    network_mode:
+      xwiki-nw
+
+
+- name: re-create a xwiki container
+  docker_container:
+    name: xwiki
+    image: "{{ xwiki_tag }}"
+    state: present
+    recreate: yes
+    env:
+      DB_USER: "{{ db_user }}"
+      DB_PASSWORD: "{{ db_pass }}"
+      DB_DATABASE: "{{ db_name }}"
+      DB_HOST: "mysql-xwiki"
+    volumes:
+      - /my/own/xwiki:/usr/local/xwiki
+
+
+- name: restart xwiki container
+  docker_container:
+    name: xwiki
+    image: "{{ xwiki_tag }}"
+    state: started
+    restart: yes
+    ports:
+      - "8080:8080"
+    env:
+      DB_USER: "{{ db_user }}"
+      DB_PASSWORD: "{{ db_pass }}"
+      DB_DATABASE: "{{ db_name }}"
+      DB_HOST: "myql-xwiki"
+    network_mode:
+      xwiki-nw
+    etc_hosts: >
+      {
+        "{{ db_server }}": "{{ db_server_ip }}"
+      }

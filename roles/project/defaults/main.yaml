@@ -1,0 +1,17 @@
+yum_epel_release_package:
+  - epel-release
+yum_docker:
+  - docker
+
+apt_docker:
+- docker
+
+xwiki_tag: "begun74/docker-xwiki:v10"
+
+db_user: "xwiki"
+db_pass: "xwiki"
+db_host: "mysql-xwiki"
+db_name: "xwiki"
+
+db_server: "mysql-xwiki"
+db_server_ip: "172.18.0.2"
