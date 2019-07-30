@@ -19,9 +19,9 @@
 
 - name: Start Docker service
   service:
-      name: docker
-      state: started
-      enabled: yes
+    name: docker
+    state: started
+    enabled: yes
 
 - name: Add user vagrant to docker group
   user:
@@ -74,6 +74,7 @@
     image: "{{ xwiki_tag }}"
     state: present
     recreate: yes
+    update_cache: yes
     env:
       DB_USER: "{{ db_user }}"
       DB_PASSWORD: "{{ db_pass }}"
