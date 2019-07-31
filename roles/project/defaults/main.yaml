@@ -6,7 +6,7 @@ yum_docker:
 apt_docker:
 - docker
 
-xwiki_tag: "begun74/docker-xwiki:v10"
+xwiki_tag: "begun74/docker-xwiki:v11"
 
 db_user: "xwiki"
 db_pass: "xwiki"
