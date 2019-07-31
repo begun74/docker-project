@@ -14,5 +14,5 @@ all_hosts:
           ansible_user: vagrant
           ansible_host: 10.13.210.56
         ubuntu_virt:
-          ansible_user: user  
-          ansible_host: 10.13.210.53
+          ansible_user: vagrant
+          ansible_host: 10.13.210.59
