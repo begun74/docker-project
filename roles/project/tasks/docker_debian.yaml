@@ -68,7 +68,7 @@
       xwiki-nw
 
 
-- name: re-create a xwiki container
+- name: re-create a xwiki container {{ xwiki_tag }}
   docker_container:
     name: xwiki
     image: "{{ xwiki_tag }}"
@@ -83,7 +83,7 @@
       - /my/own/xwiki:/usr/local/xwiki
 
 
-- name: restart xwiki container
+- name: restart xwiki container {{ xwiki_tag }}
   docker_container:
     name: xwiki
     image: "{{ xwiki_tag }}"
