@@ -2,9 +2,9 @@
 virtualbox:
   hosts:
 #     centos_virt:
-#     ubuntu_virt:
+     ubuntu_virt:
 #     ubuntu_virt_home:
-     ubuntu_virt_sa:
+#     ubuntu_virt_sa:
 
 all_hosts:
   children:
