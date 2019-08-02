@@ -10,7 +10,7 @@ Vagrant.configure("2") do |config|
 ######  config.vm.box = "bento/centos-7.5"
   config.vm.box = "bento/ubuntu-16.04"
 
-  config.vm.network "public_network", ip: "10.13.210.59", bridge: "eth1"
+  config.vm.network "public_network", ip: "192.168.0.104", bridge: "eth1"
 
   config.vm.provider "virtualbox" do |v|
       v.name = "SA-project Ubuntu"
@@ -35,7 +35,7 @@ Vagrant.configure("2") do |config|
 
 	echo "Ssh-keygen & ssh-copy-id )"
 	cat /dev/zero |ssh-keygen -t rsa -b 4096  -N ""
-	sshpass -p vagrant ssh-copy-id -o StrictHostKeyChecking=no vagrant@10.13.210.59
+	sshpass -p vagrant ssh-copy-id -o StrictHostKeyChecking=no vagrant@192.168.0.104
 
 	echo "Ansible install xwiki project"
 	cd sa-project
