@@ -20,7 +20,7 @@ all_hosts:
           ansible_host: 10.13.210.59
         ubuntu_virt_home:
           ansible_user: vagrant
-          ansible_host: 192.168.0.103
+          ansible_connection: local
         ubuntu_virt_sa:
           ansible_user: user
           ansible_host: 192.168.254.224
