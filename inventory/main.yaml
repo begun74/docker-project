@@ -3,8 +3,9 @@ virtualbox:
   hosts:
 #     centos_virt:
 #     ubuntu_virt:
-     ubuntu_virt_home:
+     ubuntu_virt_local:
 #     ubuntu_virt_sa:
+      
 
 all_hosts:
   children:
@@ -17,8 +18,8 @@ all_hosts:
           ansible_host: 10.13.210.56
         ubuntu_virt:
           ansible_user: vagrant
-          ansible_host: 10.13.210.59
-        ubuntu_virt_home:
+          ansible_host: 10.13.210.53
+        ubuntu_virt_local:
           ansible_user: vagrant
           ansible_connection: local
         ubuntu_virt_sa:

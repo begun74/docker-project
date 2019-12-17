@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "kubectl", type: "shell",  inline: <<-SCRIPT
 	echo "Installing pip"
 	sudo apt update
-	sudo apt install python-pip sshpass ansible -y
+	sudo apt install python-pip sshpass ansible net-tools nano -y
 	
 	sudo pip install virtualenv --upgrade
 	sudo pip install -U setuptools

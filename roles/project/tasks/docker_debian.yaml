@@ -2,8 +2,10 @@
 
 - name: Install prerequisites
   apt:
-    name: ['apt-transport-https','ca-certificates','curl','gnupg2','software-properties-common']
+    name: ['apt-transport-https','ca-certificates','curl','gnupg2','software-properties-common','nano','net-tools']
     update_cache: yes
+  tags: 
+   - xwiki
 
 - name: Add Docker GPG key
   apt_key: url=https://download.docker.com/linux/ubuntu/gpg
@@ -81,7 +83,8 @@
       DB_HOST: "mysql-xwiki"
     volumes:
       - /my/own/xwiki:/usr/local/xwiki
-
+  tags:
+    - xwiki 
 
 - name: restart xwiki container {{ xwiki_tag }}
   docker_container:
@@ -102,3 +105,20 @@
       {
         "{{ db_server }}": "{{ db_server_ip }}"
       }
+  tags:
+     - xwiki
+
+- name: Apt update && apt install nano net-tools -y
+  shell: docker exec xwiki bash -c "apt update && apt install nano net-tools -y"
+  tags:
+    - xwiki
+#  register: hello
+
+#- name: stdout
+#  debug: msg="{{hello.stdout }}"
+
+
+- name: Apt update && apt install nano net-tools -y
+  shell: docker exec mysql-xwiki bash -c "apt update && apt install nano net-tools -y"
+  tags:
+    - xwiki
