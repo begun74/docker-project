@@ -16,4 +16,4 @@ db_host: "mysql-xwiki"
 db_name: "xwiki"
 
 db_server: "mysql-xwiki"
-db_server_ip: "172.18.0.2"
+db_server_ip: "10.1.1.3"
