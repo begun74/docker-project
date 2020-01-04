@@ -38,6 +38,13 @@
 - name: Create a network bridge xwiki-nw
   docker_network:
     name: xwiki-nw
+    ipam_config:
+      - subnet: 10.1.1.0/28
+        gateway: 10.1.1.2
+        iprange: 10.1.1.0/28
+#        aux_addresses:
+#          host1: 172.3.27.3
+#          host2: 172.3.27.4
 
 - name: Re-create a mysql:5.7 container
   docker_container:
