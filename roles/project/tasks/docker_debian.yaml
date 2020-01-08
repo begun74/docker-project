@@ -54,7 +54,7 @@
     command: -d mysql:5.7 --character-set-server=utf8 --collation-server=utf8_bin --explicit-defaults-for-timestamp=1
     state: present
     recreate: yes
-    restart: yes
+#    restart: yes
     env: 
       MYSQL_ROOT_PASSWORD: "xwiki"
       MYSQL_USER: "{{ db_user }}"
@@ -64,21 +64,20 @@
       - /my/own/mysql:/var/lib/mysql
 
 
-#- name: restart mysql:5.7 container
-#  docker_container:
-#    name: mysql-xwiki
-#    hostname: mysql-xwiki
-#    image: mysql:5.7
-#    state: started
-#    restart: yes
-#    env:
-#      MYSQL_ROOT_PASSWORD: "xwiki"
-#      MYSQL_USER: "{{ db_user }}"
-#      MYSQL_PASSWORD: "{{ db_pass }}"
-#      MYSQL_DATABASE: "{{ db_name }}"
-#    network_mode:
-#      xwiki-nw
-
+- name: restart mysql:5.7 container
+  docker_container:
+    name: mysql-xwiki
+    hostname: mysql-xwiki
+    image: mysql:5.7
+    state: started
+    restart: yes
+    env:
+      MYSQL_ROOT_PASSWORD: "xwiki"
+      MYSQL_USER: "{{ db_user }}"
+      MYSQL_PASSWORD: "{{ db_pass }}"
+      MYSQL_DATABASE: "{{ db_name }}"
+    network_mode:
+      xwiki-nw
 
 - name: re-create a xwiki container {{ xwiki_tag }}
   docker_container:
@@ -87,7 +86,7 @@
     image: "{{ xwiki_tag }}"
     state: present
     recreate: yes
-    restart: yes 
+#    restart: yes 
     env:
       DB_USER: "{{ db_user }}"
       DB_PASSWORD: "{{ db_pass }}"
@@ -97,42 +96,42 @@
       - /my/own/xwiki:/usr/local/xwiki
     network_mode:
       xwiki-nw
+#    etc_hosts: >
+#      {
+#        "{{ db_server }}": "{{ db_server_ip }}"
+#      }
+  tags:
+    - xwiki 
+
+- name: restart xwiki container {{ xwiki_tag }}
+  docker_container:
+    name: xwiki
+    hostname: xwiki
+    image: "{{ xwiki_tag }}"
+    state: started
+    restart: yes
+    ports:
+      - "8080:8080"
+    env:
+      DB_USER: "{{ db_user }}"
+      DB_PASSWORD: "{{ db_pass }}"
+      DB_DATABASE: "{{ db_name }}"
+      DB_HOST: "myql-xwiki"
+    network_mode:
+      xwiki-nw
     etc_hosts: >
       {
         "{{ db_server }}": "{{ db_server_ip }}"
       }
   tags:
-    - xwiki 
+     - xwiki
 
-#- name: restart xwiki container {{ xwiki_tag }}
-#  docker_container:
-#    name: xwiki
-#    hostname: xwiki
-#    image: "{{ xwiki_tag }}"
-#    state: started
-#    restart: yes
-#    ports:
-#      - "8080:8080"
-#    env:
-#      DB_USER: "{{ db_user }}"
-#      DB_PASSWORD: "{{ db_pass }}"
-#      DB_DATABASE: "{{ db_name }}"
-#      DB_HOST: "myql-xwiki"
-#    network_mode:
-#      xwiki-nw
-#    etc_hosts: >
-#      {
-#        "{{ db_server }}": "{{ db_server_ip }}"
-#      }
+
+#- name: Waiting for 30 seconds and continue
+#  wait_for: timeout=30
+#  delegate_to: localhost
 #  tags:
-#     - xwiki
-
-
-- name: Waiting for 30 seconds and continue
-  wait_for: timeout=30
-  delegate_to: localhost
-  tags:
-   - act
+#   - act
 
 
 - name: Xwiki Apt update && apt install nano net-tools -y
