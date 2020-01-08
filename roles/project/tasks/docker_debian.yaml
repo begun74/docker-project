@@ -120,11 +120,6 @@
      - xwiki
 
 
-- name: Mysql-xwiki Apt update && apt install nano net-tools -y
-  shell: docker exec mysql-xwiki bash -c "apt update && apt install nano net-tools -y "
-  tags:
-    - xwiki
-
 - name: Xwiki Apt update && apt install nano net-tools -y
   shell: docker exec xwiki bash -c "apt update && apt install nano net-tools -y "
   tags:
@@ -133,3 +128,9 @@
 
 #- name: stdout
 #  debug: msg="{{hello.stdout }}"
+
+
+- name: Mysql-xwiki Apt update && apt install nano net-tools -y
+  shell: docker exec mysql-xwiki bash -c "apt update && apt install nano net-tools -y "
+  tags:
+    - xwiki
