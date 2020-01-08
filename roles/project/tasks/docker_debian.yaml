@@ -66,6 +66,7 @@
 - name: restart mysql:5.7 container
   docker_container:
     name: mysql-xwiki
+    hostname: mysql-xwiki
     image: mysql:5.7
     state: started
     restart: yes
@@ -98,6 +99,7 @@
 - name: restart xwiki container {{ xwiki_tag }}
   docker_container:
     name: xwiki
+    hostname: xwiki
     image: "{{ xwiki_tag }}"
     state: started
     restart: yes
@@ -119,12 +121,12 @@
 
 
 - name: Mysql-xwiki Apt update && apt install nano net-tools -y
-  shell: docker exec mysql-xwiki bash -c "apt update && apt install nano net-tools -y"
+  shell: docker exec mysql-xwiki bash -c "apt update && apt install nano net-tools -y "
   tags:
     - xwiki
 
 - name: Xwiki Apt update && apt install nano net-tools -y
-  shell: docker exec xwiki bash -c "apt update && apt install nano net-tools -y"
+  shell: docker exec xwiki bash -c "apt update && apt install nano net-tools -y "
   tags:
     - xwiki
 #  register: hello
