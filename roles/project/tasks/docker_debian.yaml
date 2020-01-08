@@ -88,7 +88,7 @@
     state: present
     recreate: yes
     restart: yes 
-   env:
+    env:
       DB_USER: "{{ db_user }}"
       DB_PASSWORD: "{{ db_pass }}"
       DB_DATABASE: "{{ db_name }}"
