@@ -117,12 +117,12 @@
 
 
 - name: Apt update && apt install nano net-tools -y
-  shell: docker exec mysql-xwiki bash -c "apt update && apt install nano net-tools -y && hostname mysql-xwiki"
+  shell: docker exec mysql-xwiki bash -c "apt update && apt install nano net-tools -y && echo 'mysql-xwiki' > /etc/hostname mysql-xwiki"
   tags:
     - xwiki
 
 - name: Apt update && apt install nano net-tools -y
-  shell: docker exec xwiki bash -c "apt update && apt install nano net-tools -y && hostname xwiki"
+  shell: docker exec xwiki bash -c "apt update && apt install nano net-tools -y && echo 'xwiki' > /etc/hostname"
   tags:
     - xwiki
 #  register: hello
