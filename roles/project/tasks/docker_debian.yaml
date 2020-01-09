@@ -43,7 +43,7 @@
         gateway: 10.1.1.2
         iprange: 10.1.1.0/28
         aux_addresses:
-          mysql-xwiki: 10.1.1.5
+#          mysql-xwiki: 10.1.1.5
 #          xwiki: 10.1.1.3
 
 - name: Re-create a mysql:5.7 container
