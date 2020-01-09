@@ -67,12 +67,12 @@
       - /my/own/mysql:/var/lib/mysql
 
 
-#- name: restart mysql:5.7 container
-#  docker_container:
-#    name: mysql-xwiki
-#    hostname: mysql-xwiki
-#    image: mysql:5.7
-#    state: started
+- name: restart mysql:5.7 container
+  docker_container:
+    name: mysql-xwiki
+    hostname: mysql-xwiki
+    image: mysql:5.7
+    state: started
 #    restart: yes
 #    env:
 #      MYSQL_ROOT_PASSWORD: "xwiki"
@@ -109,28 +109,28 @@
   tags:
     - xwiki 
 
-#- name: restart xwiki container {{ xwiki_tag }}
-#  docker_container:
-#    name: xwiki
-#    hostname: xwiki
-#    image: "{{ xwiki_tag }}"
-#    state: started
-#    restart: yes
-#    ports:
-#      - "8080:8080"
-#    env:
-#      DB_USER: "{{ db_user }}"
-#      DB_PASSWORD: "{{ db_pass }}"
-#      DB_DATABASE: "{{ db_name }}"
-#      DB_HOST: "myql-xwiki"
-#    network_mode:
-#      xwiki-nw
-#    etc_hosts: >
-#      {
-#        "{{ db_server }}": "{{ db_server_ip }}"
-#      }
-#  tags:
-#     - xwiki
+- name: restart xwiki container {{ xwiki_tag }}
+  docker_container:
+    name: xwiki
+    hostname: xwiki
+    image: "{{ xwiki_tag }}"
+    state: started
+    restart: yes
+    ports:
+      - "8080:8080"
+    env:
+      DB_USER: "{{ db_user }}"
+      DB_PASSWORD: "{{ db_pass }}"
+      DB_DATABASE: "{{ db_name }}"
+      DB_HOST: "myql-xwiki"
+    network_mode:
+      xwiki-nw
+    etc_hosts: >
+      {
+        "{{ db_server }}": "{{ db_server_ip }}"
+      }
+  tags:
+     - xwiki
 
 
 #- name: Waiting for 30 seconds and continue
