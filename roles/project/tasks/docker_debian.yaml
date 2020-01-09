@@ -56,7 +56,6 @@
     recreate: yes
 #    restart: yes
     networks:
-      - name: TestingNet
         ipv4_address: "10.1.1.1"
     env: 
       MYSQL_ROOT_PASSWORD: "xwiki"
@@ -91,7 +90,6 @@
     recreate: yes
 #    restart: yes 
     networks:
-      - name: TestingNet
         ipv4_address: "10.1.1.3"
     env:
       DB_USER: "{{ db_user }}"
